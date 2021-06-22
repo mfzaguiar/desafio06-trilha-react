@@ -4,17 +4,17 @@ export function Separator() {
   return (
     <Flex flexDir="column" justify="center" align="center" pb={10}>
       <Box
-        w={["60px", "90px"]}
+        w={{ base: "60px", lg: "90px" }}
         mx="auto"
         h="2px"
         bg="gray.700"
-        mb={"20"}
+        mb={{ base: "10", lg: "20" }}
         color="darkText"
       />
       <Heading
         textAlign="center"
         fontWeight="500"
-        fontSize={["lg", "3xl", "4xl"]}
+        fontSize={{ base: "xl", md: "3xl", lg: "4xl" }}
         color="darkText"
         lineHeight="tall"
       >

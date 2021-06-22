@@ -1,4 +1,4 @@
-import { Container, Flex, Heading, Text } from "@chakra-ui/react";
+import { Flex, Heading, Text, LinkBox } from "@chakra-ui/react";
 import Link from "next/link";
 import SwiperCore, {
   Navigation,
@@ -14,94 +14,69 @@ import "swiper/swiper.min.css";
 import "swiper/components/pagination/pagination.min.css";
 import "swiper/components/navigation/navigation.min.css";
 
+import { ContinentDataProps } from "../lib/interfaces";
+
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay]);
 
-export function Carousel() {
+interface CarouselProps {
+  continents: ContinentDataProps[];
+}
+
+export function Carousel({ continents }: CarouselProps) {
   return (
-    <Container maxWidth="container.xl" pb={20}>
+    <Flex
+      w="100%"
+      h={{ base: "350px", lg: "450px" }}
+      maxW="1240px"
+      mx="auto"
+      mb={{ base: "5", lg: "10" }}
+    >
       <Swiper
-        spaceBetween={30}
-        centeredSlides={true}
+        slidesPerView={1}
+        navigation
+        pagination={{ clickable: true }}
         autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
+          delay: 4000,
         }}
-        pagination={{
-          clickable: true,
-        }}
-        navigation={true}
+        style={{ width: "100%", flex: "1" }}
       >
-        <SwiperSlide>
-          <Flex
-            rounded="2xl"
-            w="100%"
-            h={350}
-            align="center"
-            justify="center"
-            direction="column"
-            bgImage="url('/assets/continent/europe.png')"
-            bgPosition="100% 30%"
-            bgRepeat="no-repeat"
-            bgSize="cover"
-            textAlign="center"
-          >
-            <Link href={`/continent/europe`}>
-              <a>
-                <Heading
-                  fontSize={["3xl", "4xl"]}
-                  color="heading"
-                  fontWeight="bold"
+        {continents.map((continent) => (
+          <SwiperSlide key={continent.id}>
+            <Link href={`/continent/${continent.id}`} passHref>
+              <LinkBox as="a">
+                <Flex
+                  w="100%"
+                  h="100%"
+                  align="center"
+                  justify="center"
+                  direction="column"
+                  bgImage={`url('${continent.carrouselImage}')`}
+                  bgPosition="100% 30%"
+                  bgRepeat="no-repeat"
+                  bgSize="cover"
+                  textAlign="center"
                 >
-                  Europa
-                </Heading>
-                <Text
-                  fontWeight="bold"
-                  color="info"
-                  fontSize={["0.8rem", "1xl", "2xl"]}
-                  mt={["2", "4"]}
-                >
-                  O continente mais antigo.
-                </Text>
-              </a>
+                  <Heading
+                    fontSize={{ base: "3xl", lg: "3xl" }}
+                    color="heading"
+                    fontWeight="bold"
+                  >
+                    {continent.name}
+                  </Heading>
+                  <Text
+                    fontWeight="bold"
+                    color="info"
+                    fontSize={{ base: "lg", lg: "2xl" }}
+                    mt={{ base: "2", lg: "4" }}
+                  >
+                    {continent.description}
+                  </Text>
+                </Flex>
+              </LinkBox>
             </Link>
-          </Flex>
-        </SwiperSlide>
-        <SwiperSlide>
-          <Flex
-            rounded="2xl"
-            w="100%"
-            h={350}
-            align="center"
-            justify="center"
-            direction="column"
-            bgImage="url('/assets/continent/europe.png')"
-            bgPosition="100% 30%"
-            bgRepeat="no-repeat"
-            bgSize="cover"
-            textAlign="center"
-          >
-            <Link href={`/continent/europe`}>
-              <a>
-                <Heading
-                  fontSize={["3xl", "4xl"]}
-                  color="heading"
-                  fontWeight="bold"
-                >
-                  Europa
-                </Heading>
-                <Text
-                  fontWeight="bold"
-                  color="info"
-                  fontSize={["0.8rem", "1xl", "2xl"]}
-                  mt={["2", "4"]}
-                >
-                  O continente mais antigo.
-                </Text>
-              </a>
-            </Link>
-          </Flex>
-        </SwiperSlide>
+          </SwiperSlide>
+        ))}
       </Swiper>
-    </Container>
+    </Flex>
   );
 }

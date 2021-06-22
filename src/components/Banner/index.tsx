@@ -1,21 +1,31 @@
-import { Box, Container, Text, Image } from "@chakra-ui/react";
+import {
+  Box,
+  Container,
+  Text,
+  Image,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 
 export function Banner() {
+  const isWideVersion = useBreakpointValue({
+    base: false,
+    lg: true,
+  });
+
   return (
     <Box
       position="relative"
-      W="100%"
-      h={["163px", "250px", "250px", "335px"]}
+      w="100%"
       bgImage="url('/assets/background.png')"
       bgPosition={["100% 20%", "100% 20%", "100% 30%"]}
       bgRepeat="no-repeat"
       bgSize="cover"
-      py="20"
+      py={{ base: "12", md: "20" }}
     >
       <Container maxW="container.lg">
         <Text
           as="p"
-          fontSize="4xl"
+          fontSize={{ base: "xl", md: "3xl", lg: "4xl" }}
           fontWeight="medium"
           lineHeight="tall"
           color="heading"
@@ -25,7 +35,7 @@ export function Banner() {
         </Text>
         <Text
           as="p"
-          fontSize="lg"
+          fontSize={{ base: "sm", md: "lg" }}
           fontWeight="normal"
           lineHeight="6"
           color="info"
@@ -36,9 +46,11 @@ export function Banner() {
           sempre sonhou.
         </Text>
       </Container>
-      <Box position="absolute" right={40} bottom={-10}>
-        <Image src="./assets/Airplane.svg" alt="airplane" />
-      </Box>
+      {isWideVersion && (
+        <Box position="absolute" right={40} bottom={-10}>
+          <Image src="/assets/Airplane.svg" alt="airplane" />
+        </Box>
+      )}
     </Box>
   );
 }
